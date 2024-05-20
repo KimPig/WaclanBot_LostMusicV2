@@ -4,7 +4,7 @@ export default class Help extends Command {
         super(client, {
             name: 'help',
             description: {
-                content: '도움말을 보여줘요',
+                content: 'Shows the help menu',
                 examples: ['help'],
                 usage: 'help',
             },
@@ -27,7 +27,7 @@ export default class Help extends Command {
             options: [
                 {
                     name: 'command',
-                    description: '특정 명령어에 대한 도움말을 보여줘요',
+                    description: 'The command you want to get info on',
                     type: 3,
                     required: false,
                 },
@@ -66,9 +66,9 @@ export default class Help extends Command {
             const helpEmbed = embed
                 .setColor(this.client.color.main)
                 .setTitle('Help Menu')
-                .setDescription(`안녕하세요!, 전 ${this.client.user.username} 이에요. \`${prefix}help <명령어>\` 를 통해 더 자세한 도움말을 볼 수 있어요.`)
+                .setDescription(`Hey there! I'm ${this.client.user.username}, The official music bot of lost island. You can use \`${prefix}help <command>\` to get more info on a command.`)
                 .setFooter({
-                text: `${prefix}help <명령어> 를 사용해 더 자세한 도움말을 보세요!`,
+                text: `Use ${prefix}help <command> for more info on a command`,
             });
             fildes.forEach((field) => helpEmbed.addFields(field));
             ctx.sendMessage({ embeds: [helpEmbed] });
@@ -77,18 +77,25 @@ export default class Help extends Command {
             const command = this.client.commands.get(args[0].toLowerCase());
             if (!command)
                 return ctx.sendMessage({
-                    embeds: [client.embed().setColor(client.color.red).setDescription(`\`${args[0]}\` 라는 명령어는 존재하지 않아요.`)],
+                    embeds: [client.embed().setColor(client.color.red).setDescription(`Command \`${args[0]}\` not found`)],
                 });
             const embed = this.client.embed();
             const helpEmbed = embed.setColor(this.client.color.main).setTitle(`Help Menu - ${command.name}`)
-                .setDescription(`**설명:** ${command.description.content}
-**사용법:** ${prefix}${command.description.usage}
-**예시:** ${command.description.examples.map((example) => `${prefix}${example}`).join(', ')}
-**쿨타임:** ${command.cooldown} 초
-**필요 권한:** ${command.permissions.user.length > 0 ? command.permissions.user.map((perm) => `\`${perm}\``).join(', ') : 'None'}
-**봇 권한:** ${command.permissions.client.map((perm) => `\`${perm}\``).join(', ')}
-**개발자 전용:** ${command.permissions.dev ? 'Yes' : 'No'}
-**슬래쉬 명렁어:** ${command.slashCommand ? 'Yes' : 'No'}`);
+                .setDescription(`**Description:** ${command.description.content}
+**Usage:** ${prefix}${command.description.usage}
+**Examples:** ${command.description.examples.map((example) => `${prefix}${example}`).join(', ')}
+**Aliases:** ${command.aliases.map((alias) => `\`${alias}\``).join(', ')}
+**Category:** ${command.category}
+**Cooldown:** ${command.cooldown} seconds
+**Permissions:** ${command.permissions.user.length > 0 ? command.permissions.user.map((perm) => `\`${perm}\``).join(', ') : 'None'}
+**Bot Permissions:** ${command.permissions.client.map((perm) => `\`${perm}\``).join(', ')}
+**Developer Only:** ${command.permissions.dev ? 'Yes' : 'No'}
+**Slash Command:** ${command.slashCommand ? 'Yes' : 'No'}
+**Args:** ${command.args ? 'Yes' : 'No'}
+**Player:** ${command.player.active ? 'Yes' : 'No'}
+**DJ:** ${command.player.dj ? 'Yes' : 'No'}
+**DJ Permissions:** ${command.player.djPerm ? command.player.djPerm : 'None'}
+**Voice:** ${command.player.voice ? 'Yes' : 'No'}`);
             ctx.sendMessage({ embeds: [helpEmbed] });
         }
     }

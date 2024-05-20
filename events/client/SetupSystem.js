@@ -9,21 +9,21 @@ export default class SetupSystem extends Event {
     }
     async run(message) {
         if (!message.member.voice.channel) {
-            await oops(message.channel, `노래를 재생하려면 통화방에 연결되어 있어야 해요`);
+            await oops(message.channel, `You are not connected to a voice channel to queue songs.`);
             if (message)
                 await message.delete().catch(() => { });
             return;
         }
         ;
         if (!message.member.voice.channel.permissionsFor(this.client.user).has(PermissionsBitField.resolve(['Connect', 'Speak']))) {
-            await oops(message.channel, `${message.member.voice.channel} 에 접속할 권한이 없어요`);
+            await oops(message.channel, `I don't have enough permission to connect/speak in ${message.member.voice.channel}`);
             if (message)
                 await message.delete().catch(() => { });
             return;
         }
         ;
         if (message.guild.members.cache.get(this.client.user.id).voice.channel && message.guild.members.cache.get(this.client.user.id).voice.channelId !== message.member.voice.channelId) {
-            await oops(message.channel, `<#${message.guild.members.cache.get(this.client.user.id).voice.channelId}> 에 연결되어 있어야 노래를 재생할 수 있어요`);
+            await oops(message.channel, `You are not connected to <#${message.guild.members.cache.get(this.client.user.id).voice.channelId}> to queue songs`);
             if (message)
                 await message.delete().catch(() => { });
             return;

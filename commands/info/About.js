@@ -5,7 +5,7 @@ export default class About extends Command {
         super(client, {
             name: 'about',
             description: {
-                content: '봇에 관한 정보를 보여줘요',
+                content: 'Shows information about the bot',
                 examples: ['about'],
                 usage: 'about',
             },
@@ -31,26 +31,30 @@ export default class About extends Command {
     async run(client, ctx, args) {
         const row = new ActionRowBuilder().addComponents(
             new ButtonBuilder()
-                .setLabel('웹사이트 보기')
+                .setLabel('View Website')
                 .setStyle(ButtonStyle.Link)
-                .setURL(`https://waclan.net`));
+                .setURL(`https://lostisland.gq`),
+            new ButtonBuilder()
+                .setLabel('Join Our Server')
+                .setStyle(ButtonStyle.Link)
+                .setURL('https://dsc.gg/lostisland_mc'));
         const embed = this.client
             .embed()
             .setAuthor({
-                name: 'WaclanBot',
-                iconURL: `https://cdn.discordapp.com/attachments/679225050389544979/1155089851360743485/profile.png`,
+                name: 'Lost Island',
+                iconURL: `https://cdn.discordapp.com/icons/1015701743583113247/af60925b2ade41e55f3f14b11f00dde0.webp`,
             })
-            .setThumbnail('https://cdn.discordapp.com/attachments/679225050389544979/1155089851360743485/profile.png')
+            .setThumbnail('https://cdn.discordapp.com/icons/1015701743583113247/af60925b2ade41e55f3f14b11f00dde0.webp')
             .setColor(this.client.color.main)
             .addFields([
                 {
-                    name: '개발자',
-                    value: '[KimPig](https://github.com/KimPig)',
+                    name: 'Creator',
+                    value: '[h00z3x](https://github.com/h00z3x)',
                     inline: true,
                 },
                 {
                     name: '\u200b',
-                    value: `물론 전체 개발은 하지 않았지만요.`,
+                    value: `This bot is dedicated to lost island network and you can enjoy using it!`,
                     inline: true,
                 },
             ]);

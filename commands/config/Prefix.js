@@ -4,7 +4,7 @@ export default class Prefix extends Command {
         super(client, {
             name: 'prefix',
             description: {
-                content: "봇의 접두사 관련 명령어에요",
+                content: "Shows the bot's prefix",
                 examples: ['prefix set', 'prefix reset', 'prefix set !'],
                 usage: 'prefix set, prefix reset, prefix set !',
             },
@@ -27,12 +27,12 @@ export default class Prefix extends Command {
             options: [
                 {
                     name: 'set',
-                    description: '봇의 접두사를 설정해요',
+                    description: 'Sets the prefix',
                     type: 1,
                     options: [
                         {
                             name: 'prefix',
-                            description: '사용하고싶은 접두사를 설정해요',
+                            description: 'The prefix you want to set',
                             type: 3,
                             required: true,
                         },
@@ -40,7 +40,7 @@ export default class Prefix extends Command {
                 },
                 {
                     name: 'reset',
-                    description: '접두사를 기본 설정으로 되돌려요',
+                    description: 'Resets the prefix to the default one',
                     type: 1,
                 },
             ],
@@ -66,12 +66,12 @@ export default class Prefix extends Command {
         switch (subCommand) {
             case 'set':
                 if (!pre) {
-                    embed.setDescription(`이 서버의 접두사는 \`${prefix ? prefix.prefix : client.config.prefix}\` 이에요!`);
+                    embed.setDescription(`The prefix for this server is \`${prefix ? prefix.prefix : client.config.prefix}\``);
                     return await ctx.sendMessage({ embeds: [embed] });
                 }
                 if (pre.length > 3)
                     return await ctx.sendMessage({
-                        embeds: [embed.setDescription(`접두사는 3문자보다 길 수 없어요`)],
+                        embeds: [embed.setDescription(`The prefix can't be longer than 3 characters`)],
                     });
                 if (!prefix) {
                     prefix = await this.client.prisma.guild.create({
@@ -81,7 +81,7 @@ export default class Prefix extends Command {
                         },
                     });
                     return await ctx.sendMessage({
-                        embeds: [embed.setDescription(`이 서버의 접두사는 이제 \`${prefix.prefix}\` 이에요!`)],
+                        embeds: [embed.setDescription(`The prefix for this server is now \`${prefix.prefix}\``)],
                     });
                 }
                 else {
@@ -94,13 +94,13 @@ export default class Prefix extends Command {
                         },
                     });
                     return await ctx.sendMessage({
-                        embeds: [embed.setDescription(`이 서버의 접두사는 이제 \`${prefix.prefix}\` 이에요!`)],
+                        embeds: [embed.setDescription(`The prefix for this server is now \`${prefix.prefix}\``)],
                     });
                 }
             case 'reset':
                 if (!prefix)
                     return await ctx.sendMessage({
-                        embeds: [embed.setDescription(`이 서버의 접두사는 \`${client.config.prefix}\` 이에요!`)],
+                        embeds: [embed.setDescription(`The prefix for this server is \`${client.config.prefix}\``)],
                     });
                 prefix = await this.client.prisma.guild.update({
                     where: {
@@ -111,7 +111,7 @@ export default class Prefix extends Command {
                     },
                 });
                 return await ctx.sendMessage({
-                    embeds: [embed.setDescription(`이 서버의 접두사는 이제 \`${client.config.prefix}\` 이에요!`)],
+                    embeds: [embed.setDescription(`The prefix for this server is now \`${client.config.prefix}\``)],
                 });
         }
     }

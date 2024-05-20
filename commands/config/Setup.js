@@ -6,7 +6,7 @@ export default class Setup extends Command {
         super(client, {
             name: 'setup',
             description: {
-                content: '봇의 설정을 시작해요',
+                content: 'Sets up the bot',
                 examples: ['setup create', 'setup delete', 'setup info'],
                 usage: 'setup',
             },
@@ -29,17 +29,17 @@ export default class Setup extends Command {
             options: [
                 {
                     name: 'create',
-                    description: '노래 전용 채널을 만들어요',
+                    description: 'Creates the song request channel',
                     type: ApplicationCommandOptionType.Subcommand,
                 },
                 {
                     name: 'delete',
-                    description: '노래 전용 채널을 삭제해요',
+                    description: 'Deletes the song request channel',
                     type: ApplicationCommandOptionType.Subcommand,
                 },
                 {
                     name: 'info',
-                    description: '노래 전용 채널을 보여줘요',
+                    description: 'Shows the song request channel',
                     type: ApplicationCommandOptionType.Subcommand,
                 },
             ],
@@ -79,14 +79,14 @@ export default class Setup extends Command {
                 if (data)
                     return ctx.sendMessage({
                         embeds: [{
-                                description: "이미 노래 전용 채널이 존재해요",
+                                description: "The song request channel already exists",
                                 color: client.color.red
                             }]
                     });
                 const textChannel = await ctx.guild.channels.create({
-                    name: `music-${this.client.user.username}`,
+                    name: `${this.client.user.username}-song-requests`,
                     type: ChannelType.GuildText,
-                    topic: "노래 요청 채널!",
+                    topic: "Song requests for the music bot",
                     permissionOverwrites: [
                         {
                             type: OverwriteType.Member,
@@ -102,7 +102,7 @@ export default class Setup extends Command {
                 });
                 const player = this.client.queue.get(ctx.guild.id);
                 const image = this.client.config.links.img;
-                const desc = player && player.queue && player.current ? `[${player.current.info.title}](${player.current.info.uri})` : '아무것도 재생중이지 않아요!';
+                const desc = player && player.queue && player.current ? `[${player.current.info.title}](${player.current.info.uri})` : 'Nothing playing right now';
                 embed.setDescription(desc)
                     .setImage(image);
                 await textChannel.send({
@@ -120,7 +120,7 @@ export default class Setup extends Command {
                 const embed2 = client.embed()
                     .setColor(client.color.main);
                 await ctx.sendMessage({
-                    embeds: [embed2.setDescription(`노래 전용 채널이 ${textChannel}에 생성되었어요!`)]
+                    embeds: [embed2.setDescription(`The song request channel has been created in ${textChannel}`)]
                 });
                 break;
             case 'delete':
@@ -132,7 +132,7 @@ export default class Setup extends Command {
                 if (!data2)
                     return ctx.sendMessage({
                         embeds: [{
-                                description: "노래 전용 채널이 존재하지 않아요",
+                                description: "The song request channel doesn't exist",
                                 color: client.color.red
                             }]
                     });
@@ -144,7 +144,7 @@ export default class Setup extends Command {
                 await ctx.guild.channels.cache.get(data2.textId).delete().catch(() => { });
                 await ctx.sendMessage({
                     embeds: [{
-                            description: "노래 전용 채널이 삭제되었어요",
+                            description: "The song request channel has been deleted",
                             color: client.color.main
                         }]
                 });
@@ -158,12 +158,12 @@ export default class Setup extends Command {
                 if (!data3)
                     return ctx.sendMessage({
                         embeds: [{
-                                description: "노래 전용 채널이 존재하지 않아요",
+                                description: "The song request channel doesn't exist",
                                 color: client.color.red
                             }]
                     });
                 const channel = ctx.guild.channels.cache.get(data3.textId);
-                embed.setDescription(`노래 전용 채널은 ${channel}이에요!`)
+                embed.setDescription(`The song request channel is ${channel}`)
                     .setColor(client.color.main);
                 await ctx.sendMessage({
                     embeds: [embed]

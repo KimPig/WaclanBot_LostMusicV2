@@ -6,8 +6,8 @@ function neb(embed, player, client) {
         iconUrl = client.user.displayAvatarURL({ extension: 'png', });
     let icon = player.current ? player.current.info.thumbnail : client.config.links.img;
     return embed
-        .setAuthor({ name: '재생 중...', iconURL: iconUrl })
-        .setDescription(`[${player.current.info.title}](${player.current.info.uri}) by ${player.current.info.author} • \`[${client.utils.formatTime(player.current.info.length)}]\` - <@${player.current.info.requester.id}>`)
+        .setAuthor({ name: 'Now Playing', iconURL: iconUrl })
+        .setDescription(`[${player.current.info.title}](${player.current.info.uri}) by ${player.current.info.author} • \`[${client.utils.formatTime(player.current.info.length)}]\` - Requested by <@${player.current.info.requester.id}>`)
         .setImage(icon)
         .setColor(client.color.main);
 }
@@ -32,39 +32,39 @@ async function setupStart(client, query, player, message) {
             let res = await client.queue.search(query);
             switch (res.loadType) {
                 case 'LOAD_FAILED':
-                    await message.channel.send({ embeds: [embed.setColor(client.color.red).setDescription('검색 중 오류가 발생했어요')] }).then((msg) => { setTimeout(() => { msg.delete(); }, 5000); });
+                    await message.channel.send({ embeds: [embed.setColor(client.color.red).setDescription('There was an error while searching.')] }).then((msg) => { setTimeout(() => { msg.delete(); }, 5000); });
                     break;
                 case 'NO_MATCHES':
-                    await message.channel.send({ embeds: [embed.setColor(client.color.red).setDescription('검색 결과가 없어요')] }).then((msg) => { setTimeout(() => { msg.delete(); }, 5000); });
+                    await message.channel.send({ embeds: [embed.setColor(client.color.red).setDescription('There were no results found.')] }).then((msg) => { setTimeout(() => { msg.delete(); }, 5000); });
                     break;
                 case 'TRACK_LOADED':
                     const track = player.buildTrack(res.tracks[0], message.author);
                     if (player.queue.length > client.config.maxQueueSize) {
-                        await message.channel.send({ embeds: [embed.setColor(client.color.red).setDescription(`대기열에 너무 많은 노래가 있어요 - 최대는 ${client.config.maxQueueSize}곡이에요`)] }).then((msg) => { setTimeout(() => { msg.delete(); }, 5000); });
+                        await message.channel.send({ embeds: [embed.setColor(client.color.red).setDescription(`The queue is too long. The maximum length is ${client.config.maxQueueSize} songs.`)] }).then((msg) => { setTimeout(() => { msg.delete(); }, 5000); });
                         return;
                     }
                     player.queue.push(track);
                     await player.isPlaying();
-                    await message.channel.send({ embeds: [embed.setColor(client.color.main).setDescription(`[${res.tracks[0].info.title}](${res.tracks[0].info.uri})를 대기열에 추가했어요!`)] }).then((msg) => { setTimeout(() => { msg.delete(); }, 5000); });
+                    await message.channel.send({ embeds: [embed.setColor(client.color.main).setDescription(`Added [${res.tracks[0].info.title}](${res.tracks[0].info.uri}) to the queue.`)] }).then((msg) => { setTimeout(() => { msg.delete(); }, 5000); });
                     neb(n, player, client);
                     if (m)
                         await m.edit({ embeds: [n] }).catch(() => { });
                     break;
                 case 'PLAYLIST_LOADED':
                     if (res.length > client.config.maxPlaylistSize) {
-                        await message.channel.send({ embeds: [embed.setColor(client.color.red).setDescription(`플레이리스트가 너무 길어요 - 최대는 ${client.config.maxPlaylistSize}곡이에요`)] }).then((msg) => { setTimeout(() => { msg.delete(); }, 5000); });
+                        await message.channel.send({ embeds: [embed.setColor(client.color.red).setDescription(`The playlist is too long. The maximum length is ${client.config.maxPlaylistSize} songs.`)] }).then((msg) => { setTimeout(() => { msg.delete(); }, 5000); });
                         return;
                     }
                     for (const track of res.tracks) {
                         const pl = player.buildTrack(track, message.author);
                         if (player.queue.length > client.config.maxQueueSize) {
-                            await message.channel.send({ embeds: [embed.setColor(client.color.red).setDescription(`대기열에 너무 많은 노래가 있어요 - 최대는 ${client.config.maxQueueSize}곡이에요`)] }).then((msg) => { setTimeout(() => { msg.delete(); }, 5000); });
+                            await message.channel.send({ embeds: [embed.setColor(client.color.red).setDescription(`The queue is too long. The maximum length is ${client.config.maxQueueSize} songs.`)] }).then((msg) => { setTimeout(() => { msg.delete(); }, 5000); });
                             return;
                         }
                         player.queue.push(pl);
                     }
                     await player.isPlaying();
-                    await message.channel.send({ embeds: [embed.setColor(client.color.main).setDescription(`[플레이리스트 안의 ${res.tracks.length}](${res.tracks[0].info.uri})개의 노래를 대기열에 추가했어요!`)] }).then((msg) => { setTimeout(() => { msg.delete(); }, 5000); });
+                    await message.channel.send({ embeds: [embed.setColor(client.color.main).setDescription(`Added [${res.tracks.length}](${res.tracks[0].info.uri}) to the queue.`)] }).then((msg) => { setTimeout(() => { msg.delete(); }, 5000); });
                     neb(n, player, client);
                     if (m)
                         await m.edit({ embeds: [n] }).catch(() => { });
@@ -72,12 +72,12 @@ async function setupStart(client, query, player, message) {
                 case 'SEARCH_RESULT':
                     const track2 = player.buildTrack(res.tracks[0], message.author);
                     if (player.queue.length > client.config.maxQueueSize) {
-                        await message.channel.send({ embeds: [embed.setColor(client.color.red).setDescription(`대기열에 너무 많은 노래가 있어요 - 최대는 ${client.config.maxQueueSize}곡이에요`)] }).then((msg) => { setTimeout(() => { msg.delete(); }, 5000); });
+                        await message.channel.send({ embeds: [embed.setColor(client.color.red).setDescription(`The queue is too long. The maximum length is ${client.config.maxQueueSize} songs.`)] }).then((msg) => { setTimeout(() => { msg.delete(); }, 5000); });
                         return;
                     }
                     player.queue.push(track2);
                     await player.isPlaying();
-                    await message.channel.send({ embeds: [embed.setColor(client.color.main).setDescription(`[${res.tracks[0].info.title}](${res.tracks[0].info.uri})를 대기열에 추가했어요!`)] }).then((msg) => { setTimeout(() => { msg.delete(); }, 5000); });
+                    await message.channel.send({ embeds: [embed.setColor(client.color.main).setDescription(`Added [${res.tracks[0].info.title}](${res.tracks[0].info.uri}) to the queue.`)] }).then((msg) => { setTimeout(() => { msg.delete(); }, 5000); });
                     neb(n, player, client);
                     if (m)
                         await m.edit({ embeds: [n] }).catch(() => { });
@@ -103,9 +103,9 @@ async function trackStart(msgId, channel, player, track, client) {
         if (!iconUrl)
             iconUrl = client.user.displayAvatarURL({ extension: 'png', });
         const embed = client.embed()
-            .setAuthor({ name: `재생 중...`, iconURL: iconUrl })
+            .setAuthor({ name: `Now Playing`, iconURL: iconUrl })
             .setColor(client.color.main)
-            .setDescription(`[${track.info.title}](${track.info.uri}) - \`[${client.utils.formatTime(track.info.length)}]\` - <@${track.info.requester.id}>`)
+            .setDescription(`[${track.info.title}](${track.info.uri}) - \`[${client.utils.formatTime(track.info.length)}]\` - Requested by <@${track.info.requester.id}>`)
             .setImage(icon);
         await m.edit({
             embeds: [embed],
@@ -123,8 +123,8 @@ async function trackStart(msgId, channel, player, track, client) {
             iconUrl = client.user.displayAvatarURL({ extension: 'png', });
         const embed = client.embed()
             .setColor(client.color.main)
-            .setAuthor({ name: `재생 중...`, iconURL: iconUrl })
-            .setDescription(`[${track.info.title}](${track.info.uri}) - \`[${client.utils.formatTime(track.info.length)}]\` - <@${track.info.requester.id}>`)
+            .setAuthor({ name: `Now Playing`, iconURL: iconUrl })
+            .setDescription(`[${track.info.title}](${track.info.uri}) - \`[${client.utils.formatTime(track.info.length)}]\` - Requested by <@${track.info.requester.id}>`)
             .setImage(icon);
         await channel.send({
             embeds: [embed],
@@ -171,9 +171,9 @@ async function updateSetup(client, guild) {
             if (!iconUrl)
                 iconUrl = client.user.displayAvatarURL({ extension: 'png', });
             const embed = client.embed()
-                .setAuthor({ name: `재생 중...`, iconURL: iconUrl })
+                .setAuthor({ name: `Now Playing`, iconURL: iconUrl })
                 .setColor(client.color.main)
-                .setDescription(`[${player.current.info.title}](${player.current.info.uri}) - \`[${client.utils.formatTime(player.current.info.length)}]\` - <@${player.current.info.requester.id}>`)
+                .setDescription(`[${player.current.info.title}](${player.current.info.uri}) - \`[${client.utils.formatTime(player.current.info.length)}]\` - Requested by <@${player.current.info.requester.id}>`)
                 .setImage(player.current.info.thumbnail);
             await m.edit({
                 embeds: [embed],
@@ -189,7 +189,7 @@ async function updateSetup(client, guild) {
             const embed = client.embed()
                 .setColor(client.color.main)
                 .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL({ extension: 'png', }) })
-                .setDescription(`아무것도 재생중이지 않아요!`)
+                .setDescription(`Nothing playing right now`)
                 .setImage(client.config.links.img);
             await m.edit({
                 embeds: [embed],
@@ -218,21 +218,6 @@ async function buttonReply(int, args, color) {
         }
     }, 2000);
 }
-async function QueueReply(int, args, color) {
-    const embed = new EmbedBuilder();
-    let m;
-    if (int.replied) {
-        m = await int.editReply({ embeds: [embed.setColor(color).setDescription(args)] }).catch(() => { });
-    }
-    else {
-        m = await int.followUp({ embeds: [embed.setColor(color).setDescription(args)] }).catch(() => { });
-    }
-    setTimeout(async () => {
-        if (int && !int.ephemeral) {
-            await m.delete().catch(() => { });
-        }
-    }, 10000);
-}
 async function oops(channel, args) {
     try {
         let embed1 = new EmbedBuilder().setColor("Red").setDescription(`${args}`);
@@ -245,7 +230,7 @@ async function oops(channel, args) {
         return console.error(e);
     }
 }
-export { setupStart, trackStart, buttonReply, QueueReply, updateSetup, oops };
+export { setupStart, trackStart, buttonReply, updateSetup, oops };
 /**
  * Project: lavamusic
  * Author: Blacky

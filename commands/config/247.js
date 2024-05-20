@@ -5,7 +5,7 @@ export default class _247 extends Command {
         super(client, {
             name: '247',
             description: {
-                content: '봇이 통화방을 나가지 않게 해줘요',
+                content: 'set the bot to stay in the vc',
                 examples: ['247'],
                 usage: '247',
             },
@@ -70,7 +70,7 @@ export default class _247 extends Command {
             return ctx.sendMessage({
                 embeds: [
                     embed
-                        .setDescription(`**247 모드가 켜졌습니다!**`)
+                        .setDescription(`**247 mode has been enabled**`)
                         .setColor(client.color.main),
                 ],
             });
@@ -83,7 +83,7 @@ export default class _247 extends Command {
             return ctx.sendMessage({
                 embeds: [
                     embed
-                        .setDescription(`**247 모드가 꺼졌습니다!**`)
+                        .setDescription(`**247 mode has been disabled**`)
                         .setColor(client.color.red),
                 ],
             });

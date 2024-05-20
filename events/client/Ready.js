@@ -8,12 +8,12 @@ export default class Ready extends Event {
         });
     }
     async run() {
-        this.client.logger.success(`${this.client.user?.tag} is Ready!`);
+        this.client.logger.success(`${this.client.user?.tag} is ready!`);
         this.client.user?.setPresence({
             activities: [
                 {
                     name: config.botActivity,
-                    type: ActivityType[config.botActivityType],
+                    type: ActivityType.Listening,
                 },
             ],
             status: config.botStatus,
