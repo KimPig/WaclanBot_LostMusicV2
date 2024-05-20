@@ -1,17 +1,22 @@
 {
   "list": [
     {
-      "name": "lavalink1",
-      "url": "ip:port",
-      "auth": "password",
-      "secure": true
+      "url": "35.221.56.124:4027",
+      "auth": "reedrousisgayy",
+      "name": "2",
+      "secure": false
     },
     {
-      "name": "lavalink2",
-      "url": "ip:port",
-      "auth": "password",
+      "url": "54.38.198.23:88",
+      "auth": "stonemusicgay",
+      "name": "3",
+      "secure": false
+    },
+    {
+      "url": "lavalink.oryzen.xyz:2248",
+      "auth": "discord.gg/6xpF6YqVDd",
+      "name": "4",
       "secure": false
     }
-  ],
-  "note": "These are optional if you want you can remove them or add more just like i did. !!!!lavalink in .env has priority over these!!!!"
+  ]
 }

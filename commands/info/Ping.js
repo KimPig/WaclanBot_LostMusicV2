@@ -4,7 +4,7 @@ export default class Ping extends Command {
         super(client, {
             name: 'ping',
             description: {
-                content: "Shows the bot's ping",
+                content: "핑을 표시해요",
                 examples: ['ping'],
                 usage: 'ping',
             },
@@ -35,12 +35,12 @@ export default class Ping extends Command {
             .setColor(this.client.color.main)
             .addFields([
             {
-                name: 'Bot Latency',
+                name: '봇 지연율',
                 value: `\`\`\`ini\n[ ${msg.createdTimestamp - ctx.createdTimestamp}ms ]\n\`\`\``,
                 inline: true,
             },
             {
-                name: 'API Latency',
+                name: 'API 지연율',
                 value: `\`\`\`ini\n[ ${Math.round(ctx.client.ws.ping)}ms ]\n\`\`\``,
                 inline: true,
             },

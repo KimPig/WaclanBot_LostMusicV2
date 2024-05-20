@@ -5,16 +5,16 @@ export class Utils {
         const hourMs = 60 * minuteMs;
         const dayMs = 24 * hourMs;
         if (ms < minuteMs) {
-            return `${ms / 1000}s`;
+            return `${ms / 1000}초`;
         }
         else if (ms < hourMs) {
-            return `${Math.floor(ms / minuteMs)}m ${Math.floor((ms % minuteMs) / 1000)}s`;
+            return `${Math.floor(ms / minuteMs)}분 ${Math.floor((ms % minuteMs) / 1000)}초`;
         }
         else if (ms < dayMs) {
-            return `${Math.floor(ms / hourMs)}h ${Math.floor((ms % hourMs) / minuteMs)}m`;
+            return `${Math.floor(ms / hourMs)}시간 ${Math.floor((ms % hourMs) / minuteMs)}분`;
         }
         else {
-            return `${Math.floor(ms / dayMs)}d ${Math.floor((ms % dayMs) / hourMs)}h`;
+            return `${Math.floor(ms / dayMs)}일 ${Math.floor((ms % dayMs) / hourMs)}시간`;
         }
     }
     static chunk(array, size) {
@@ -46,13 +46,13 @@ export class Utils {
         for (const t of time) {
             const unit = t[t.length - 1];
             const amount = Number(t.slice(0, -1));
-            if (unit === 'd')
+            if (unit === '일')
                 ms += amount * 24 * 60 * 60 * 1000;
-            else if (unit === 'h')
+            else if (unit === '시간')
                 ms += amount * 60 * 60 * 1000;
-            else if (unit === 'm')
+            else if (unit === '분')
                 ms += amount * 60 * 1000;
-            else if (unit === 's')
+            else if (unit === '초')
                 ms += amount * 1000;
         }
         return ms;

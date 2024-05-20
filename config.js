@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import { SearchEngine } from './types.js';
-import list from './lavalinks.json' assert { type: 'json'};
+import * as lavalinks from "./lavalinks.json" assert { type: 'json' };
 
 dotenv.config();
 let exports = {
@@ -16,14 +16,15 @@ let exports = {
     searchEngine: process.env.SEARCH_ENGINE || SearchEngine.YouTube,
     maxPlaylistSize: parseInt(process.env.MAX_PLAYLIST_SIZE) || 100,
     botStatus: process.env.BOT_STATUS || 'online',
-    botActivity: process.env.BOT_ACTIVITY || 'Lavamusic',
+    botActivity: process.env.BOT_ACTIVITY || 'WaclanBot',
+	botActivityType: process.env.BOT_ACTIVITY_TYPE || '0',
     maxQueueSize: parseInt(process.env.MAX_QUEUE_SIZE) || 100,
     owners: process.env.OWNERS?.split(','),
     database: process.env.DATABASE_URL,
     clientId: process.env.CLIENT_ID,
     guildId: process.env.GUILD_ID,
     links: {
-        img: process.env.IMG_LINK || 'https://i.imgur.com/ud3EWNh.jpg'
+        img: process.env.IMG_LINK || 'https://img3.gelbooru.com//images/bc/4d/bc4dc7baa27bf085330ff4634cb8003a.png'
     },
     icons: {
         youtube: 'https://media.discordapp.net/attachments/963097935820750878/1054328059639111700/3670147.png',
@@ -40,10 +41,12 @@ let exports = {
             name: process.env.LAVALINK_NAME,
             secure: parseBoolean(process.env.LAVALINK_SECURE) || false,
         },
-        ...list.list,
     ],
     geniusKey: process.env.GENIUS_KEY,
 };
+for (const i in lavalinks.list) {
+    exports.lavalink.push(lavalinks.list[i])
+}
 export default exports;
 function parseBoolean(value) {
     if (typeof value === 'string') {

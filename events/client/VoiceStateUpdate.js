@@ -1,6 +1,5 @@
 import { Event } from '../../structures/index.js';
 import { ChannelType } from 'discord.js';
-import { updateSetup } from '../../utils/SetupSystem.js';
 export default class VoiceStateUpdate extends Event {
     constructor(client, file) {
         super(client, file, {
@@ -17,7 +16,6 @@ export default class VoiceStateUpdate extends Event {
         if (newState.guild.members.cache.get(this.client.user.id) &&
             !newState.guild.members.cache.get(this.client.user.id).voice.channelId) {
             if (player) {
-                await updateSetup(this.client, newState.guild);
                 return player.destroy();
             }
         }
@@ -56,7 +54,7 @@ export default class VoiceStateUpdate extends Event {
                     const playerVoiceChannel = newState.guild.channels.cache.get(player.player.connection.channelId);
                     if (player && playerVoiceChannel && playerVoiceChannel.members.filter((x) => !x.user.bot).size <= 0) {
                         if (player) {
-                            await updateSetup(this.client, newState.guild);
+							player.stop
                             player.destroy();
                         }
                     }
@@ -69,7 +67,7 @@ export default class VoiceStateUpdate extends Event {
                     const playerVoiceChannel = newState.guild.channels.cache.get(player.player.connection.channelId);
                     if (player && playerVoiceChannel && playerVoiceChannel.members.filter((x) => !x.user.bot).size <= 0) {
                         if (player) {
-                            await updateSetup(this.client, newState.guild);
+							player.stop
                             player.destroy();
                         }
                     }

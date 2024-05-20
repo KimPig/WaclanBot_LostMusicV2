@@ -33,7 +33,7 @@ export default class MessageCreate extends Event {
         const mention = new RegExp(`^<@!?${this.client.user.id}>( |)$`);
         if (message.content.match(mention)) {
             await message.reply({
-                content: `Hey, my prefix for this server is \`${prefix}\` Want more info? then do \`${prefix}help\`\nStay Safe, Stay Awesome!`,
+                content: `이 서버의 접두사는 \`${prefix}\` 이에요. 더 많은 정보를 원하시면 \`${prefix}help\` 를 입력해 주세요.`,
             });
             return;
         }
@@ -153,7 +153,7 @@ export default class MessageCreate extends Event {
                     .embed()
                     .setColor(this.client.color.red)
                     .setTitle('Missing Arguments')
-                    .setDescription(`Please provide the required arguments for the \`${command.name}\` command.\n\nExamples:\n${command.description.examples ? command.description.examples.join('\n') : 'None'}`)
+                    .setDescription(`\`${command.name}\`를 사용하려면 필요한 구문을 작성해 주세요 \n\n예시:\n${command.description.examples ? command.description.examples.join('\n') : 'None'}`)
                     .setFooter({ text: 'Syntax: [] = optional, <> = required' });
                 return await message.reply({ embeds: [embed] });
             }
@@ -173,7 +173,7 @@ export default class MessageCreate extends Event {
             const timeLeft = (expirationTime - now) / 1000;
             if (now < expirationTime && timeLeft > 0.9) {
                 return message.reply({
-                    content: `Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${cmd}\` command.`,
+                    content: `\`${cmd}\` 명령어를 사용하려면 ${timeLeft.toFixed(1)}초 후에 다시 입력해 주세요.`,
                 });
             }
             timestamps.set(message.author.id, now);

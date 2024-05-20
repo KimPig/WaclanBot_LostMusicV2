@@ -6,7 +6,7 @@ export default class Info extends Command {
         super(client, {
             name: 'info',
             description: {
-                content: 'Ingormation about the bot',
+                content: '봇을 운영하는 서버에 대한 정보를 보여줘요',
                 examples: ['info'],
                 usage: 'info',
             },
@@ -46,15 +46,15 @@ export default class Info extends Command {
         const botUsers = client.users.cache.size;
         const botCommands = client.commands.size;
         const botInfo = `Bot Information:
-- **Operating System**: ${osType} ${osRelease}
-- **Uptime**: ${client.utils.formatTime(osUptime)}
-- **Hostname**: ${osHostname}
-- **CPU Architecture**: ${cpuArch} (${cpuCores} cores)
-- **Memory Usage**: ${client.utils.formatBytes(usedMem)} / ${client.utils.formatBytes(totalMem)} (${Math.round((usedMem / totalMem) * 100)}%)
-- **Node.js Version**: ${nodeVersion}
-- **Discord.js Version**: ${discordJsVersion}
-- **Connected to** ${botGuilds} guilds, ${botChannels} channels, and ${botUsers} users
-- **Total Commands**: ${botCommands}
+- **서버 OS**: ${osType} ${osRelease}
+- **업타임**: ${client.utils.formatTime(osUptime)}
+- **서버 호스트 이름**: ${osHostname}
+- **CPU 아키텍쳐**: ${cpuArch} (${cpuCores} cores)
+- **사용중인 램**: ${client.utils.formatBytes(usedMem)} / ${client.utils.formatBytes(totalMem)} (${Math.round((usedMem / totalMem) * 100)}%)
+- **Node.js 버전**: ${nodeVersion}
+- **Discord.js 버전**: ${discordJsVersion}
+- **사용중인 서버** ${botGuilds} 서버, ${botChannels} 채널, ${botUsers} 유저
+- **총 명령어 수**: ${botCommands}
   `;
         const embed = this.client.embed();
         return ctx.sendMessage({

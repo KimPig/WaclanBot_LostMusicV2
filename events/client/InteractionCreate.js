@@ -81,15 +81,15 @@ export default class InteractionCreate extends Event {
                 if (command.player.active) {
                     if (!this.client.queue.get(interaction.guildId))
                         return await interaction.reply({
-                            content: 'Nothing is playing right now.',
+                            content: '아무것도 재생중이지 않아요!',
                         });
                     if (!this.client.queue.get(interaction.guildId).queue)
                         return await interaction.reply({
-                            content: 'Nothing is playing right now.',
+                            content: '아무것도 재생중이지 않아요!',
                         });
                     if (!this.client.queue.get(interaction.guildId).current)
                         return await interaction.reply({
-                            content: 'Nothing is playing right now.',
+                            content: '아무것도 재생중이지 않아요!',
                         });
                 }
                 if (command.player.dj) {
